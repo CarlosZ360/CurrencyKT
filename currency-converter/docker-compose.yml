@@ -11,7 +11,7 @@ services:
     volumes:
       - C:\Users\MSI\pgdata:/var/lib/postgresql/data
   currency-converter:
-    image: demo:1.0.0
+    image: demo:2.1.0
     restart: always
     mem_limit: 512m
     ports:
@@ -24,3 +24,7 @@ services:
       - C:\Users\MSI\logs-springdk:/Users/MSI/logs-springdk/logs-chapulin
     depends_on:
       - postgres
+  angular:
+    image: angular-software:3.0.0-docker
+    ports:
+      - "4200:4200"
