@@ -28,5 +28,11 @@ class CurrencyApi @Autowired constructor(private val currencyBl: CurrencyBl) {
         val result = currencyBl.exchangeRate(to, from, amount)
         return result
     }
+    @GetMapping("/history")
+    fun history(@RequestParam page: Int, @RequestParam size: Int): Any {
+        LOGGER.info("Iniciando peticion para obtener el historial de conversiones")
+        val result = currencyBl.history(page, size)
+        return result
+    }
 
 }

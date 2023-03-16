@@ -5,6 +5,7 @@ import arquitectura.software.demo.dto.ErrorServiceDto
 import arquitectura.software.demo.dto.ResponseServiceDto
 import arquitectura.software.demo.dao.Currency
 import arquitectura.software.demo.dao.CurrencyRepository.CurrencyRepository
+import arquitectura.software.demo.dao.CurrencyRepository.ChangeRepository
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
@@ -17,11 +18,12 @@ import org.springframework.beans.factory.annotation.Value
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.PageRequest
 import java.util.*
 
 @Service
 
-class CurrencyBl @Autowired constructor(private val currencyRepository: CurrencyRepository) {
+class CurrencyBl @Autowired constructor(private val currencyRepository: CurrencyRepository, private val changeRepository: ChangeRepository) {
 
     companion object {
         val objectMapper = jacksonObjectMapper()
@@ -83,5 +85,11 @@ class CurrencyBl @Autowired constructor(private val currencyRepository: Currency
         LOGGER.info("El servicio de conversión de monedas fue fallido")
         val errorService = objectMapper.readValue<ErrorServiceDto>(body)
         throw ServiceException("Code: ${errorService.error?.code}, message: ${errorService.error?.message}")
+    }
+    fun history(page: Int, size: Int): Any {
+        LOGGER.info("Iniciando logica para obtener el historial de conversiones")
+        val currencies = changeRepository.findAll(PageRequest.of(page,size))
+        LOGGER.info("El historial de conversiones fue exitoso")
+        return currencies
     }
 }

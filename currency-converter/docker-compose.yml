@@ -10,6 +10,8 @@ services:
       POSTGRES_DB: postgres
     volumes:
       - C:\Users\MSI\pgdata:/var/lib/postgresql/data
+    networks:
+      - carlos-network
   currency-converter:
     image: demo:2.1.0
     restart: always
@@ -24,9 +26,21 @@ services:
       - C:\Users\MSI\logs-springdk:/Users/MSI/logs-springdk/logs-chapulin
     depends_on:
       - postgres
+    networks:
+      - carlos-network
   angular:
     image: angular-software:4.0.0-docker
     ports:
       - "4200:80"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - carlos-network
+networks:
+  carlos-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.23.0.0/16
+          gateway: 172.23.0.1
