@@ -1,35 +1,35 @@
-FROM eclipse-temurin:11-jdk
-COPY target/*.jar /app.jar
-COPY .env .env
-ENV USER_NAME ${POSTGRES_USER}
-ENV PASSWORD ${POSTGRES_PASSWORD}
-ENV URL ${POSTGRES_URL}
+#FROM eclipse-temurin:11-jdk
+#COPY target/*.jar /app.jar
+#COPY .env .env
+#ENV USER_NAME ${POSTGRES_USER}
+#ENV PASSWORD ${POSTGRES_PASSWORD}
+#ENV URL ${POSTGRES_URL}
+#
+#ENTRYPOINT ["java","-jar","/app.jar"]
 
-ENTRYPOINT ["java","-jar","/app.jar"]
+FROM eclipse-temurin:11.0.18_10-jdk-alpine as build
+WORKDIR /workspace/app
 
-#FROM --platform=linux/x86_64 eclipse-temurin:11.0.18_10-jdk-alpine as build
-#WORKDIR /workspace/app
-#
-#COPY mvnw .
-#COPY .mvn .mvn
-#COPY pom.xml .
-#COPY src src
-#
-#RUN ./mvnw install -DskipTests
-#RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
-#
-#
-#FROM eclipse-temurin:11
-#
-#VOLUME /tmp
-#ARG DEPENDENCY=/workspace/app/target/dependency
-#COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
-#COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
-#COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
-#
-#ENV DB_USERNAME "postgres"
-#ENV DB_PASSWORD "mysecretpassword"
-#ENV DB_URL "jdbc:postgresql://localhost:5432/software"
-#ENV API_KEY ""
-#
-#ENTRYPOINT ["java","-cp","app:app/lib/*","arquitectura.software.demo.DemoApplicationKt"]
+COPY mvnw .
+COPY .mvn .mvn
+COPY pom.xml .
+COPY src src
+
+RUN ./mvnw install -DskipTests
+RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
+
+
+FROM eclipse-temurin:11
+
+VOLUME /tmp
+ARG DEPENDENCY=/workspace/app/target/dependency
+COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
+COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
+COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
+
+ENV USERNAME "postgres"
+ENV PASSWORD "mysecretpassword"
+ENV URL "jdbc:postgresql://localhost:5432/software"
+ENV API_KEY ""
+
+ENTRYPOINT ["java","-cp","app:app/lib/*","arquitectura.software.demo.DemoApplicationKt"]
