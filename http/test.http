@@ -2,6 +2,6 @@
 GET  http://localhost:8080/api/currency/history?page=0&size=10
 
 ###
-GET http://localhost:8080/api/currency/exchange?from=USD&to=BOB&amount=700
+GET http://localhost:8080/api/currency/exchange?from=USD&to=BOB&amount=1000
 
 
