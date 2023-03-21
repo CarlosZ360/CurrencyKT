@@ -1,6 +1,7 @@
 currency:
   url: ${API_URL:https://api.apilayer.com/fixer/convert}
-  api_key: ${API_KEY:hKOSY55V1VVqszEwTNp8RHfsBpmi9GZg}
+  #api_key: ${API_KEY:hKOSY55V1VVqszEwTNp8RHfsBpmi9GZg}
+  api_key: ${API_KEY:wocuSTzmZNR00x9jn4NYCef5FMd66NjH}
 
 server:
   port: 8080

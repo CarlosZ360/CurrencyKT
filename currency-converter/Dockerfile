@@ -30,6 +30,6 @@ COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
 ENV USERNAME "postgres"
 ENV PASSWORD "mysecretpassword"
 ENV URL "jdbc:postgresql://localhost:5432/software"
-ENV API_KEY ""
+ENV API_KEY "wocuSTzmZNR00x9jn4NYCef5FMd66NjH"
 
 ENTRYPOINT ["java","-cp","app:app/lib/*","arquitectura.software.demo.DemoApplicationKt"]

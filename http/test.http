@@ -1,7 +1,17 @@
 ###
-GET  http://localhost:8080/api/currency/history?page=0&size=10
+GET  http://localhost:8080/api/currency/history?page=7&size=10
 
 ###
-GET http://localhost:8080/api/currency/exchange?from=USD&to=BOB&amount=1000
+GET http://localhost:8080/api/currency/exchange?from=USD&to=BOB&amount=2345
 
+### USER
+GET http://localhost:8080/api/currency/user
+Authorization: Basic user user
 
+### ADMIN
+GET http://localhost:8080/api/currency/admin
+Authorization: Basic admin admin
+
+### ADMIN
+GET http://localhost:8080/api/currency/principal
+Authorization: Basic admin admin
