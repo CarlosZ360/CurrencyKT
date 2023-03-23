@@ -1,8 +1,8 @@
 currency:
   url: ${API_URL:https://api.apilayer.com/fixer/convert}
   #api_key: ${API_KEY:hKOSY55V1VVqszEwTNp8RHfsBpmi9GZg}
-  api_key: ${API_KEY:wocuSTzmZNR00x9jn4NYCef5FMd66NjH}
-
+  #api_key: ${API_KEY:wocuSTzmZNR00x9jn4NYCef5FMd66NjH}
+  api_key: ${API_KEY:PZgoyB7LALgEpDwopDXQyHYeTW14rrK1}
 server:
   port: 8080
 
@@ -19,3 +19,25 @@ spring:
       ddl-auto: update
   application:
     name: currency-converter
+keycloak:
+  realm: software
+  auth-server-url: http://localhost:8081
+  ssl-required: external
+  resource: backend
+#    autodetect-bearer-only: true
+  credentials:
+    secret: oOO0Ckg3wi37etMfgj2hKgjd3F3ztN75
+  use-resource-role-mappings: false
+  security-constraints:
+    - auth-roles:
+        - ADMIN
+      security-collections:
+        - name: SERVICIOS DEL ADMINISTRADOR
+          patterns:
+            - /api/currency/history
+    - auth-roles:
+        - USER
+      security-collections:
+        - name: SERVICIOS DE USER
+          patterns:
+            - /api/currency/exchange
