@@ -20,24 +20,27 @@ spring:
   application:
     name: currency-converter
 keycloak:
-  realm: software
+  realm: Software
   auth-server-url: http://localhost:8081
   ssl-required: external
   resource: backend
 #    autodetect-bearer-only: true
   credentials:
-    secret: oOO0Ckg3wi37etMfgj2hKgjd3F3ztN75
+    secret: g5Aybp0sCbL3kXeHnoFzv16wdRZq5AXe
   use-resource-role-mappings: false
   security-constraints:
     - auth-roles:
         - ADMIN
+
       security-collections:
         - name: SERVICIOS DEL ADMINISTRADOR
+          methods:
+            -GET
           patterns:
-            - /api/currency/history
+            - /api/currency/*
     - auth-roles:
         - USER
       security-collections:
         - name: SERVICIOS DE USER
           patterns:
-            - /api/currency/exchange
+            - /api/currency/*
