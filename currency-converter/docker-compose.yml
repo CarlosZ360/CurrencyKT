@@ -9,11 +9,12 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: postgres
     volumes:
+     # - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       - C:\Users\MSI\pgdata:/var/lib/postgresql/data
     networks:
       - carlos-network
   currency-converter:
-    image: demo:2.1.0
+    image: demo:3.0.0
     restart: always
     mem_limit: 512m
     ports:
@@ -29,7 +30,7 @@ services:
     networks:
       - carlos-network
   angular:
-    image: angular-software:4.0.0-docker
+    image: angular-software:5.0.0-docker
     ports:
       - "4200:80"
     volumes:
